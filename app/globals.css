@@ -1,26 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --color-background: oklch(0.975 0.007 247.6); /* #F8F9FA */
+  --color-foreground: oklch(0.246 0.015 264.4); /* #343A40 */
+  --color-card: oklch(1 0 0); /* #FFFFFF */
+  --color-card-foreground: oklch(0.246 0.015 264.4); /* #343A40 */
+  --color-popover: oklch(1 0 0); /* #FFFFFF */
+  --color-popover-foreground: oklch(0.246 0.015 264.4); /* #343A40 */
+
+  /* Drive-Ready Theme Primary Accent */
+  --color-primary: oklch(0.536 0.147 259.9); /* #007bff */
+  --color-primary-foreground: oklch(0.984 0.003 247.858); /* #F8F9FA */
+
+  /* Drive-Ready Theme Secondary Accent */
+  --color-secondary: oklch(63.803% 0.18083 137.108); /* #28a745 */
+  --color-secondary-foreground: oklch(0.984 0.003 247.858); /* #F8F9FA */
+
+  /* Muted & Accent (Matching Secondary Text and Highlights) */
+  --color-muted: oklch(
+    0.704 0.04 256.788
+  ); /* Lighter gray for muted elements */
+  --color-muted-foreground: oklch(0.485 0.024 264.3); /* #6C757D */
+  --color-accent: oklch(0.89 0.015 260.6); /* Lighter gray */
+  --color-accent-foreground: oklch(0.246 0.015 264.4); /* #343A40 */
+
+  /* Destructive & Border (Matching theme) */
+  --color-destructive: oklch(0.621 0.22 24.3); /* #DC3545 */
+  --color-border: oklch(0.89 0.015 260.6); /* A light, clean border */
+  --color-input: oklch(0.89 0.015 260.6); /* Same as border for consistency */
+  --color-ring: oklch(0.536 0.147 259.9); /* #007bff */
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --destructive: var(--color-destructive);
+  --border: var(--color-border);
+  --input: var(--color-input);
+  --ring: var(--color-ring);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Outfit", sans-serif;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

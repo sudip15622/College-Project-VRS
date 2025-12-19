@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  name     String
+  password String?
+  isHost   Boolean   @default(false)
+  listings Listing[]
+  bookings Booking[]
+
+  @@index([email])
+  @@index([isHost])
+  @@map("users")
+}
+
+model Listing {
+  id          String      @id @default(uuid())
+  //basic-info
+  type        VehicleType
+  name        String
+  description String?     @db.Text
+
+  // pricing-location
+  pricePerDay Float  @db.DoublePrecision
+  location    String
+
+  // image-uploads
+  image Json // Example: { "url": "image.png", "publicId": "vehicle-listings/...." }
+
+  // Availability & status
+  isAvailable Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ownerId  String
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([type, isAvailable])
+  @@index([location, type])
+  @@index([pricePerDay])
+  @@index([ownerId])
+  @@index([createdAt])
+  @@index([isAvailable, createdAt])
+  @@map("listings")
+}
+
+model Booking {
+  id        String @id @default(uuid())
+  userId    String
+  listingId String
+
+  // date and times
+  pickupDate  DateTime
+  dropoffDate DateTime
+
+  // pricing details
+  pricePerDay Float @db.DoublePrecision
+  totalDays   Int
+  totalPrice  Float @db.DoublePrecision
+
+  status BookingStatus @default(Pending)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  bookedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([userId])
+  @@index([listingId])
+  @@index([status])
+  @@index([pickupDate, dropoffDate])
+  @@index([listingId, pickupDate, dropoffDate]) // Check date conflicts
+  @@index([status, pickupDate])
+  @@map("bookings")
+}
+
+enum Role {
+  Renter
+  Owner
+}
+
+enum VehicleType {
+  Bike
+  Scooter
+}
+
+enum BookingStatus {
+  Pending // Waiting for owner approval
+  Confirmed // Owner approved
+  Active // Ongoing rental
+  Completed // Rental finished
+  Cancelled // Cancelled by user/owner
+  Rejected // Owner rejected
+}
