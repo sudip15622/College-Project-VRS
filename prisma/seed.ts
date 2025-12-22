@@ -14,6 +14,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Alice Don",
     email: "alice@gmail.com",
+    salt: "sdjffsdflk",
     password: "Alice@15622",
     listings: {
         create: [
@@ -47,6 +48,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Ayush Pandey",
     email: "ayush@gmail.com",
+    salt: "sdkjfkldsflkjsd",
     password: "Ayush@15622",
     listings: {
         create: [

@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar user={null} />
-        <main className="w-full bg-card mx-auto py-16 lg:px-20 md:px-16 sm:px-10 px-4 space-y-10">
+        <main className="w-full bg-card min-h-[calc(100vh-80px)] mx-auto lg:px-20 md:px-16 sm:px-10 px-4 space-y-10">
           {children}
         </main>
         <Footer />

@@ -65,7 +65,7 @@ async function ListingSection({
 
 export default async function Home() {
   return (
-    <div className="flex mx-auto flex-col gap-10">
+    <div className="flex mx-auto flex-col gap-10 py-16">
       <Suspense fallback={<ListingSkeleton />}>
         <ListingSection
           city="bharatpur"

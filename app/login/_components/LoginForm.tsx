@@ -1,15 +1,18 @@
 "use client";
 import { LoginSchema, LoginType } from "@/lib/schemas/login";
-import React from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { LoginAction } from "@/lib/actions/auth";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginType>({
     resolver: zodResolver(LoginSchema),
@@ -21,9 +24,25 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginType> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<LoginType> = async(data) => {
+      if(isSubmitting) return;
+  
+      try {
+        const response = await LoginAction(data);
+  
+        if(response.success) {
+          alert(response.message);
+          reset();
+          router.push("/");
+          router.refresh();
+        } else {
+          alert(response.error);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Something went wrong!")
+      }
+    };
 
   return (
     <form
