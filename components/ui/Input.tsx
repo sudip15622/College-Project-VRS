@@ -4,11 +4,13 @@ import React, { forwardRef } from 'react'
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  message?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ 
   label, 
   error, 
+  message,
   className = "",
   type = "text",
   ...props 
@@ -29,6 +31,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       {error && (
         <span className='text-sm text-destructive'>
           {error}
+        </span>
+      )}
+      {message && (
+        <span className='text-xs text-muted-foreground'>
+          {message}
         </span>
       )}
     </div>

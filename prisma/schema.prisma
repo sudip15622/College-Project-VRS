@@ -33,7 +33,7 @@ model Listing {
   //basic-info
   type        VehicleType
   name        String
-  description String?     @db.Text
+  description String     @db.Text
 
   // pricing-location
   pricePerDay Float  @db.DoublePrecision
